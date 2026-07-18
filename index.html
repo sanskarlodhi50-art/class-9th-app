@@ -154,8 +154,9 @@
         .w-contact::before { background: conic-gradient(#8a2387, #e94057, transparent, transparent); } 
         .w-videos::before  { background: conic-gradient(#f39c12, #f1c40f, transparent, transparent); } 
         .w-complaints::before { background: conic-gradient(#ff0055, #ff5500, transparent, transparent); } 
+        .w-toppers::before { background: conic-gradient(#00f2fe, #4facfe, transparent, transparent); } 
 
-        .w-classes, .w-complaints { grid-column: span 2; }
+        .w-classes, .w-complaints, .w-toppers { grid-column: span 2; }
 
         .app-btn {
             background: rgba(9, 14, 26, 0.85);
@@ -180,7 +181,7 @@
         .w-classes .icon { font-size: 42px; animation: iconPulse 2s infinite ease-in-out; }
 
         /* कॉमन पेज लेआउट */
-        #control-panel-page, #contact-page, #complaints-page, #videos-page, #notice-page, #timetable-page { display: none; }
+        #control-panel-page, #contact-page, #complaints-page, #videos-page, #notice-page, #timetable-page, #toppers-page { display: none; }
         .page-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .back-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 14px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; }
 
@@ -213,6 +214,15 @@
         .complaint-form-group textarea { height: 140px; resize: none; }
         .send-complaint-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #ff0055, #ff5500); color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; }
 
+        /* 👑 TOPPERS CARD STYLING */
+        .topper-item-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(7, 7, 15, 0.9));
+            border-left: 5px solid #00f2fe; border-radius: 16px; padding: 16px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4); border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .topper-rank { font-size: 24px; font-weight: 900; color: #ffe600; text-shadow: 0 0 10px rgba(255,230,0,0.4); }
+
         /* ==================== 💎 5-STAR LUXURY CHAT SYSTEM ==================== */
         #chat-room-page {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -238,18 +248,35 @@
         /* सब-पैनल्स */
         .sub-panel-container { display: none; padding: 12px; background: rgba(15, 23, 42, 0.9); border-bottom: 1px solid rgba(255,255,255,0.08); z-index: 9; }
         .panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 6px; }
-        .color-dot { width: 100%; padding-bottom: 100%; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.2); }
+        .color-dot { width: 100%; padding-bottom: 100%; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.2); transform: scale(0.9); transition: 0.2s; }
+        .color-dot:hover { transform: scale(1.05); border-color: #38bdf8; }
         .style-chip { background: #334155; padding: 8px 12px; border-radius: 20px; text-align: center; font-size: 11px; cursor: pointer; font-weight: bold; color: #cbd5e1; }
         .style-chip.active { background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; box-shadow: 0 0 10px rgba(6, 182, 212, 0.4); }
 
         /* 🌌 MULTI-WALLPAPER BOX LAYER */
-        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; transition: background 0.3s ease; }
         
+        /* 🔥 PREMIUM 3D & ANIMATED LIVE THEMES PANELS */
+        .th-cyber { background: linear-gradient(135deg, #0f172a, #1e1b4b) !important; position: relative; }
+        .th-cyber::before { content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, transparent 40%, rgba(99, 102, 241, 0.05), transparent 60%); background-size: 200% 200%; animation: glowMove 6s linear infinite; pointer-events: none; }
+        
+        .th-space { background: radial-gradient(circle at center, #111827 0%, #030712 100%) !important; }
+        
+        .th-aurora { background: linear-gradient(210deg, #022c22, #050b14, #0f172a) !important; position: relative; overflow: hidden; }
+        .th-aurora::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 30%, rgba(16, 185, 129, 0.08) 0%, transparent 50%); animation: spinAurora 16s linear infinite; pointer-events: none; }
+
+        .th-neon { background: #000000 !important; border: inset 1px rgba(236, 72, 153, 0.1); }
+
+        @keyframes glowMove { 0% { background-position: 0% 0%; } 100% { background-position: 200% 200%; } }
+        @keyframes spinAurora { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         /* Wallpaper Effects Patterns */
         .wp-none {}
-        .wp-starry { background-image: radial-gradient(white 1px, transparent 0), radial-gradient(white 2px, transparent 0); background-size: 40px 40px, 60px 60px; background-position: 0 0, 20px 20px; opacity: 0.95; }
-        .wp-matrix { background: linear-gradient(rgba(0, 50, 0, 0.15) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 30, 0, 0.2), rgba(0, 0, 0, 0.1)); background-size: 4px 4px, 6px 6px; }
-        .wp-grid { background-size: 30px 30px; background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px); }
+        .wp-starry { background-image: radial-gradient(white 1px, transparent 0), radial-gradient(rgba(255,255,255,0.4) 1.5px, transparent 0); background-size: 40px 40px, 90px 90px; background-position: 0 0, 30px 40px; animation: starFloat 20s linear infinite; }
+        .wp-matrix { background: linear-gradient(rgba(0, 50, 0, 0.15) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 30, 0, 0.15), rgba(0, 0, 0, 0.1)); background-size: 4px 4px, 6px 6px; }
+        .wp-grid { background-size: 32px 32px; background-image: linear-gradient(to right, rgba(56, 189, 248, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.03) 1px, transparent 1px); }
+
+        @keyframes starFloat { from { background-position: 0 0, 30px 40px; } to { background-position: 0 1000px, 30px 1040px; } }
 
         /* 💬 PREMIUM MULTI-BUBBLES STYLING */
         .msg { max-width: 75%; padding: 10px 14px; line-height: 1.45; display: flex; flex-direction: column; position: relative; animation: slideMsg 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); user-select: none; -webkit-user-select: none; }
@@ -274,6 +301,9 @@
         .msg.outgoing .msg-sender-name { color: #34d399; }
         .msg-time { font-size: 9px; color: #64748b; align-self: flex-end; margin-top: 5px; font-weight: bold; }
         
+        /* 📸 इमेज चैट बबल डिज़ाइन */
+        .msg-img { max-width: 100%; border-radius: 12px; margin-top: 5px; display: block; border: 1px solid rgba(255,255,255,0.1); }
+
         /* 🔥 TEXT VIP EFFECTS INSIDE BUBBLE */
         .txt-normal {}
         .txt-glow { text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px currentColor; font-weight: bold; }
@@ -292,8 +322,13 @@
         /* इनपुट एरिया */
         .chat-input-area { background: rgba(22, 33, 59, 0.8); backdrop-filter: blur(15px); padding: 12px; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid rgba(255,255,255,0.08); z-index: 10; }
         .input-row-container { display: flex; align-items: center; gap: 10px; width: 100%; }
-        .input-wrapper { flex: 1; background: #0f172a; border-radius: 24px; padding: 12px 18px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.05); }
+        .input-wrapper { flex: 1; background: #0f172a; border-radius: 24px; padding: 12px 18px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255, 255, 255, 0.05); }
         .input-wrapper input { flex: 1; background: none; border: none; color: white; font-size: 15px; outline: none; }
+        
+        /* 📎 अटैचमेंट पेपरक्लिप आइकन */
+        .attach-btn-label { font-size: 20px; cursor: pointer; color: #94a3b8; display: flex; align-items: center; justify-content: center; transition: 0.2s; user-select: none; }
+        .attach-btn-label:hover { color: #38bdf8; transform: scale(1.1); }
+        
         .chat-locked-notice { display: none; width: 100%; text-align: center; padding: 12px; background: rgba(239, 68, 68, 0.1); color: #f87171; font-size: 13px; font-weight: bold; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2); }
         .send-btn-circle { width: 46px; height: 46px; background: linear-gradient(135deg, #06b6d4, #0891b2); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: white; font-size: 18px; box-shadow: 0 0 12px rgba(6, 182, 212, 0.3); }
         
@@ -309,7 +344,7 @@
         .panel-option input, .panel-option select, .panel-option textarea { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; background: #070a12; color: white; outline: none; }
         .panel-option textarea { height: 100px; resize: none; }
 
-        .admin-chat-manager-list, .admin-teachers-manager-list, .admin-complaints-manager-list, .admin-videos-manager-list, .admin-notices-manager-list, .admin-timetable-manager-list { background: #070a12; border-radius: 16px; padding: 12px; max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; border: 1px solid rgba(255,255,255,0.05); }
+        .admin-chat-manager-list, .admin-teachers-manager-list, .admin-complaints-manager-list, .admin-videos-manager-list, .admin-notices-manager-list, .admin-timetable-manager-list, .admin-toppers-manager-list { background: #070a12; border-radius: 16px; padding: 12px; max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; border: 1px solid rgba(255,255,255,0.05); }
         .manager-row { display: flex; justify-content: space-between; align-items: center; background: #111a2e; padding: 12px 16px; border-radius: 12px; gap: 10px; }
         .manager-class-name { font-size: 14px; font-weight: bold; color: #f1f5f9; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
         
@@ -320,9 +355,9 @@
         .lock-toggle-btn { padding: 8px 16px; font-size: 12px; font-weight: 800; border: none; border-radius: 8px; cursor: pointer; color: white; }
         .lock-toggle-btn.unlocked { background: #10b981; }
         .lock-toggle-btn.locked { background: #ef4444; }
-        .admin-direct-msg-box { display: flex; gap: 8px; }
+        .admin-direct-msg-box { display: flex; gap: 8px; align-items: center; width: 100%; }
         .admin-direct-msg-box input { flex: 1; }
-        .admin-send-btn { background: #38bdf8; color: #000; border: none; border-radius: 12px; padding: 0 20px; font-weight: 900; cursor: pointer; }
+        .admin-send-btn { background: #38bdf8; color: #000; border: none; border-radius: 12px; padding: 0 20px; font-weight: 900; height: 42px; cursor: pointer; }
         .save-panel-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #38bdf8, #0284c7); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 16px; cursor: pointer; }
     </style>
 </head>
@@ -368,7 +403,6 @@
                     <div class="app-btn"><span class="icon">📋</span><span>CLASS NOTICE</span></div>
                 </div>
                 
-                <!-- 📞 फिक्स किया हुआ कांटेक्ट बटन -->
                 <div class="card-wrapper w-contact" onclick="setTimeout(openContactPage, 200)">
                     <div class="app-btn"><span class="icon">📞</span><span>CONTACT</span></div>
                 </div>
@@ -379,6 +413,11 @@
                 
                 <div class="card-wrapper w-complaints" onclick="setTimeout(openComplaintsPage, 200)">
                     <div class="app-btn"><span class="icon">📢</span><span>COMPLAINTS BOX</span></div>
+                </div>
+
+                <!-- 👑 नया CLASS TOPPERS 3D ग्रिड बटन बिल्कुल कम्प्लेन बॉक्स जैसा -->
+                <div class="card-wrapper w-toppers" onclick="setTimeout(openToppersPage, 200)">
+                    <div class="app-btn"><span class="icon">🏆</span><span>CLASS TOPPERS</span></div>
                 </div>
             </div>
         </div>
@@ -418,10 +457,31 @@
             </div>
         </div>
 
+        <!-- ==================== 🏆 क्लास टॉपर्स इंटरफ़ेस स्क्रीन (कम्प्लेन बॉक्स जैसा लुक) ==================== -->
+        <div id="toppers-page">
+            <div class="page-header"><button class="back-btn" onclick="closeToppersPage()">← BACK</button><div style="font-size: 22px; font-weight: 900; color: #00f2fe;">SHIV SHIKSHA SADAN TOPPERS</div></div>
+            <!-- कम्प्लेन बोर्ड जैसा कंटेनर बॉक्स -->
+            <div class="notice-board-container">
+                <div class="notice-list-wall" id="front-toppers-list-container"></div>
+            </div>
+        </div>
+
         <!-- ==================== ⚙️ CONTROL PANEL ==================== -->
         <div id="control-panel-page">
             <div class="page-header"><button class="back-btn" onclick="saveAndClosePanel()">← BACK</button><div style="font-size: 22px; font-weight: 900; color: #38bdf8;">CONTROL ROOM</div></div>
             <div class="control-panel-container">
+                <!-- 🏆 एडमिन पैनल में टॉपर्स मैनेज करने का विकल्प -->
+                <div class="panel-section-title" style="color: #00f2fe; border-left-color: #00f2fe;">🏆 Manage Class Toppers</div>
+                <div class="panel-option">
+                    <input type="text" id="admin-topper-name" placeholder="टॉपर छात्र का नाम">
+                    <input type="text" id="admin-topper-class" placeholder="कक्षा (जैसे: Class 9th)">
+                    <div class="admin-direct-msg-box">
+                        <input type="text" id="admin-topper-marks" placeholder="प्रतिशत या रैंक (जैसे: 98% या Rank 1)">
+                        <button class="admin-send-btn" style="background: #00f2fe; color: #000;" onclick="addNewTopperFromAdmin()">जोड़ें 🏆</button>
+                    </div>
+                </div>
+                <div class="panel-option"><div class="admin-toppers-manager-list" id="admin-toppers-dashboard-list"></div></div>
+
                 <div class="panel-section-title" style="color: #4364f7; border-left-color: #4364f7;">📅 Manage Time Tables</div>
                 <div class="panel-option"><textarea id="admin-timetable-textarea" placeholder="त्रैमासिक परीक्षा 2026..."></textarea><button class="save-panel-btn" style="background: linear-gradient(135deg, #0052d4, #4364f7); margin-top: 5px; padding: 12px;" onclick="broadcastTimetableFromAdmin()">जारी करें 📅</button></div>
                 <div class="panel-option"><div class="admin-timetable-manager-list" id="admin-timetable-dashboard-list"></div></div>
@@ -448,9 +508,18 @@
                 <div class="panel-section-title">🔒 Chat Rooms Manager (On/Off)</div>
                 <div class="admin-chat-manager-list" id="admin-chat-rooms-dashboard"></div>
 
-                <div class="panel-section-title">🕊️ Admin Direct Broadcast</div>
+                <div class="panel-section-title">🕊️ Admin Direct Broadcast (Text & Image)</div>
                 <div class="panel-option"><select id="admin-target-class-select"></select></div>
-                <div class="panel-option"><div class="admin-direct-msg-box"><input type="text" id="admin-direct-msg-text" placeholder="आधिकारिक संदेश ..."><button class="admin-send-btn" onclick="adminSendDirectMessage()">भेजें</button></div></div>
+                <div class="panel-option">
+                    <div class="admin-direct-msg-box" style="flex-direction: column; gap: 10px;">
+                        <input type="text" id="admin-direct-msg-text" placeholder="आधिकारिक संदेश ..." style="width:100%;">
+                        <div style="display: flex; gap: 10px; width:100%; align-items: center;">
+                            <label style="font-size: 12px; color: #94a3b8; font-weight: bold;">फोटो अपलोड (वैकल्पिक):</label>
+                            <input type="file" id="admin-broadcast-image-file" accept="image/*" style="padding:5px; font-size:12px;">
+                            <button class="admin-send-btn" onclick="adminSendDirectMessage()">भेजें 📢</button>
+                        </div>
+                    </div>
+                </div>
                 <button class="save-panel-btn" onclick="saveAndClosePanel()">कंट्रोल ROOM से बाहर जाएं</button>
             </div>
         </div>
@@ -466,7 +535,7 @@
                 </div>
                 <div class="chat-menu-btn" onclick="toggleChatMenu(event)">⋮</div>
                 <div class="chat-dropdown-menu" id="chat-dropdown-menu-el">
-                    <div class="chat-dropdown-item" onclick="toggleSubPanel('theme-panel')">🎨 थीम्स कलर्स (Themes) <span>❯</span></div>
+                    <div class="chat-dropdown-item" onclick="toggleSubPanel('theme-panel')">🎨 प्रीमियम थीम्स (3D Themes) <span>❯</span></div>
                     <div class="chat-dropdown-item" onclick="toggleSubPanel('wallpaper-panel')">🌌 वॉलपेपर इफेक्ट्स (Effects) <span>❯</span></div>
                     <div class="chat-dropdown-item" onclick="toggleSubPanel('bubble-panel')">💬 बबल्स स्टाइल्स (Bubbles) <span>❯</span></div>
                     <div class="chat-dropdown-item clear-all" onclick="clearAllChatMessages()">🗑️ Clear All Chat</div>
@@ -475,7 +544,7 @@
 
             <!-- थीम सिलेक्शन पैनल -->
             <div class="sub-panel-container" id="theme-panel">
-                <div style="font-size: 11px; font-weight: bold; color: #94a3b8; margin-bottom: 5px;">प्रीमियम सॉलिड और ग्रेडिएंट थीम्स:</div>
+                <div style="font-size: 11px; font-weight: bold; color: #94a3b8; margin-bottom: 5px;">प्रीमियम 3D और एनिमेटेड लाइव थीम्स:</div>
                 <div class="panel-grid" id="theme-dots-grid"></div>
             </div>
 
@@ -505,7 +574,7 @@
             <!-- 💬 लाइव मैसेजेस बॉक्स -->
             <div class="chat-messages wp-none" id="chat-messages-box"></div>
 
-            <!-- 📥 इनपुट एरिया -->
+            <!-- 📥 इनपादन एरिया -->
             <div class="chat-input-area">
                 <div class="fx-selector-row">
                     <span>VIP टेक्स्ट इफेक्ट्स:</span>
@@ -514,7 +583,11 @@
                     <label class="fx-radio"><input type="radio" name="text-fx" value="rainbow"> 🌈 Rainbow</label>
                 </div>
                 <div class="input-row-container">
-                    <div class="input-wrapper" id="chat-input-wrapper-el"><input type="text" id="chat-input-field" placeholder="मैसेज टाइप करें..." onkeypress="checkEnterKey(event)"></div>
+                    <div class="input-wrapper" id="chat-input-wrapper-el">
+                        <label for="chat-image-uploader" class="attach-btn-label" id="chat-attach-icon-el">📎</label>
+                        <input type="file" id="chat-image-uploader" accept="image/*" style="display:none;" onchange="handleChatImageSelect(event)">
+                        <input type="text" id="chat-input-field" placeholder="मैसेज टाइप करें..." onkeypress="checkEnterKey(event)">
+                    </div>
                     <div class="chat-locked-notice" id="chat-locked-notice-el">🚫 चैट अभी एडमिन द्वारा बंद है।</div>
                     <button class="send-btn-circle" id="chat-send-btn-el" onclick="sendMessage()">🕊️</button>
                 </div>
@@ -561,26 +634,19 @@
         let currentUserData = null; 
         let targetActionMessageId = null; 
         let isFirstLoad = true;
+        let selectedBase64Image = ""; 
 
         let currentSelectedBubble = localStorage.getItem("sss_bubble_style") || "standard";
-        let currentSelectedTheme = localStorage.getItem("sss_theme_bg") || "#080c14";
+        let currentSelectedTheme = localStorage.getItem("sss_theme_bg") || "th-cyber";
         let currentSelectedWallpaper = localStorage.getItem("sss_wp_effect") || "none";
 
         const schoolClasses = [{ name: "Class 9", locked: false }];
 
         const chatThemes = [
-            { name: "Onyx Black", value: "#080c14" },
-            { name: "Luxury Slate", value: "#0f172a" },
-            { name: "Vampire Velvet", value: "#1a0b13" },
-            { name: "Deep Royal", value: "#060b1c" },
-            { name: "Emerald Gold", value: "#021711" },
-            { name: "Cyber Purple", value: "linear-gradient(180deg, #09090e 0%, #1c0b2b 100%)" },
-            { name: "Neon Matrix", value: "linear-gradient(180deg, #000000 0%, #051408 100%)" },
-            { name: "Oceanic Depth", value: "linear-gradient(145deg, #051329, #020710)" },
-            { name: "Carbon Fusion", value: "#121214" },
-            { name: "Nebula", value: "linear-gradient(135deg, #080711 0%, #1e122b 100%)" },
-            { name: "Crimson Eclipse", value: "linear-gradient(135deg, #0a0507 0%, #210a11 100%)" },
-            { name: "Pure Bronze", value: "#120f0d" }
+            { name: "Neon Cyber 3D", value: "th-cyber" },
+            { name: "Deep Space Cluster", value: "th-space" },
+            { name: "Aurora Glow Live", value: "th-aurora" },
+            { name: "Dark Room Neon", value: "th-neon" }
         ];
 
         window.onload = function() {
@@ -627,12 +693,16 @@
             database.ref('notices').on('value', snap => { let list = []; snap.forEach(c => { list.push({ id: c.key, ...c.val() }); }); list.reverse(); renderFrontNoticeWall(list); buildAdminNoticesList(list); });
             database.ref('videos').on('value', snap => { let list = []; snap.forEach(c => { list.push({ id: c.key, ...c.val() }); }); list.reverse(); renderFrontVideoGallery(list); buildAdminVideosList(list); });
             
-            // 📞 कांटेक्ट लिस्ट के लिए रीयल-टाइम लिसनर (सभी मोबाइल्स पर लाइव सिंक होगा)
             database.ref('teachers').on('value', snap => { 
-                let list = []; 
-                snap.forEach(c => { list.push({ id: c.key, ...c.val() }); }); 
-                renderTeacherContactsFront(list); 
-                buildAdminTeachersList(list); 
+                let list = []; snap.forEach(c => { list.push({ id: c.key, ...c.val() }); }); 
+                renderTeacherContactsFront(list); buildAdminTeachersList(list); 
+            });
+
+            // 🏆 टॉपर्स डेटाबेस लिसनर
+            database.ref('toppers').on('value', snap => {
+                let list = []; snap.forEach(c => { list.push({ id: c.key, ...c.val() }); });
+                renderFrontToppers(list);
+                buildAdminToppersList(list);
             });
 
             database.ref('complaints').on('value', snap => { let list = []; snap.forEach(c => { list.push({ id: c.key, ...c.val() }); }); list.reverse(); renderAdminComplaintsLog(list); });
@@ -645,26 +715,20 @@
             schoolClasses.forEach(c => { comp.innerHTML += `<option value="${c.name}">${c.name}</option>`; adm.innerHTML += `<option value="${c.name}">${c.name}</option>`; });
         }
 
-        // ==================== 💬 FIVE-STAR LUXURY LIVE CHAT SYSTEM ====================
+        // ==================== 💬 LIVE CHAT LOGIC ====================
         let currentChatListener = null;
 
         function openChatRoom(className) {
-            activeClassName = className;
-            isFirstLoad = true;
+            activeClassName = className; isFirstLoad = true;
             document.getElementById('chat-room-title').innerText = className + " VIP Room";
             document.getElementById('chat-room-avatar').innerText = className.charAt(0);
-            
             const msgBox = document.getElementById('chat-messages-box');
-            msgBox.style.background = currentSelectedTheme;
-            selectWallpaperEffect(currentSelectedWallpaper);
-            selectBubbleStyle(currentSelectedBubble);
+            applyThemeClass(currentSelectedTheme); selectWallpaperEffect(currentSelectedWallpaper); selectBubbleStyle(currentSelectedBubble);
 
             const classObj = schoolClasses.find(c => c.name === className);
             applyChatLockUI(classObj ? classObj.locked : false);
-
             if(currentChatListener) currentChatListener.off();
 
-            // 🔥 लाइव सिंक लॉजिक: यह लाइन दुनिया के हर मोबाइल पर मैसेज लाइव भेजेगी और दिखाएगी
             currentChatListener = database.ref('chats/' + className);
             currentChatListener.on('value', snapshot => {
                 msgBox.innerHTML = "";
@@ -673,135 +737,133 @@
                 }
                 
                 snapshot.forEach(child => {
-                    let msg = child.val();
-                    let msgId = child.key;
-
+                    let msg = child.val(); let msgId = child.key;
                     let direction = (currentUserData && msg.senderId === currentUserData.userId) ? "outgoing" : "incoming";
-                    if(msg.text && msg.text.startsWith("⭐ [ADMIN]")) direction = "incoming";
-
+                    let isAdminMessage = false; if(msg.text && msg.text.startsWith("⭐ [ADMIN]")) { direction = "incoming"; isAdminMessage = true; }
                     let effectClass = `txt-${msg.fx || 'normal'}`;
                     let reactionHtml = msg.reaction ? `<div class="msg-reaction-badge">${msg.reaction}</div>` : '';
+                    let imageHtml = msg.image ? `<img src="${msg.image}" class="msg-img" onclick="window.open(this.src)">` : '';
 
                     let msgEl = document.createElement('div');
                     msgEl.className = `msg ${direction} b-${currentSelectedBubble}`;
-                    msgEl.style.position = 'relative';
+                    if(isAdminMessage) msgEl.style.border = "1px solid #f1c40f";
                     msgEl.innerHTML = `
                         <span class="msg-sender-name">${msg.senderName || "Student"}</span>
                         <div class="${effectClass}">${msg.text}</div>
+                        ${imageHtml}
                         ${reactionHtml}
                         <span class="msg-time">${msg.time}</span>
                     `;
 
-                    // मोबाइल टच होल्ड और माउस लॉन्ग-प्रेस का बेहतरीन लॉजिक
                     let timer;
                     const startHold = () => { timer = setTimeout(() => { targetActionMessageId = msgId; document.getElementById('reaction-overlay-dock').style.display = 'flex'; }, 700); };
                     const cancelHold = () => { if(timer) clearTimeout(timer); };
-
-                    msgEl.addEventListener('mousedown', startHold);
-                    msgEl.addEventListener('mouseup', cancelHold);
-                    msgEl.addEventListener('mouseleave', cancelHold);
-                    msgEl.addEventListener('touchstart', startHold);
-                    msgEl.addEventListener('touchend', cancelHold);
-
+                    msgEl.addEventListener('mousedown', startHold); msgEl.addEventListener('mouseup', cancelHold); msgEl.addEventListener('mouseleave', cancelHold);
+                    msgEl.addEventListener('touchstart', startHold); msgEl.addEventListener('touchend', cancelHold);
                     msgBox.appendChild(msgEl);
                 });
-
                 msgBox.scrollTop = msgBox.scrollHeight;
-                
-                if (!isFirstLoad) {
-                    try { document.getElementById('snd-receive').play(); } catch(e){}
-                }
+                if (!isFirstLoad) { try { document.getElementById('snd-receive').play(); } catch(e){} }
                 isFirstLoad = false;
             });
-
             document.getElementById('chat-room-page').style.display = 'flex';
         }
 
+        function handleChatImageSelect(e) {
+            if(!e.target.files[0]) return;
+            let file = e.target.files[0]; if(file.size > 1024 * 1024) { alert("❌ फोटो बहुत बड़ी है! कृपया 1MB से छोटी फोटो चुनें।"); return; }
+            let reader = new FileReader();
+            reader.onload = function() { selectedBase64Image = reader.result; document.getElementById('chat-attach-icon-el').innerText = "✅"; };
+            reader.readAsDataURL(file);
+        }
+
         function sendMessage() {
-            let inputField = document.getElementById('chat-input-field'); let text = inputField.value.trim(); if(!text) return;
+            let inputField = document.getElementById('chat-input-field'); let text = inputField.value.trim(); if(!text && !selectedBase64Image) return;
             let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             let fxSelected = document.querySelector('input[name="text-fx"]:checked').value;
 
-            // डेटाबेस में मैसेज पुश करना (फायरबेस रीयल-टाइम ब्रॉडकास्ट)
             database.ref('chats/' + activeClassName).push({
-                text: text, time: time,
+                text: text || "📷 Photo", time: time,
                 senderName: currentUserData ? currentUserData.fullName : "Student",
                 senderId: currentUserData ? currentUserData.userId : "guest",
-                fx: fxSelected
+                fx: fxSelected, image: selectedBase64Image
             });
-
-            inputField.value = "";
+            inputField.value = ""; selectedBase64Image = ""; document.getElementById('chat-attach-icon-el').innerText = "📎";
+            document.getElementById('chat-image-uploader').value = "";
             try { document.getElementById('snd-send').play(); } catch(e){}
         }
 
         function closeReactionDock() { document.getElementById('reaction-overlay-dock').style.display = 'none'; }
-
-        function submitMessageReaction(emoji) {
-            if(targetActionMessageId && activeClassName) {
-                database.ref(`chats/${activeClassName}/${targetActionMessageId}/reaction`).set(emoji);
-            }
-            closeReactionDock();
-        }
-
-        function triggerMessageDeletion() {
-            if(confirm("🗑️ क्या आप सच में यह मैसेज डिलीट करना चाहते हैं?")) {
-                database.ref(`chats/${activeClassName}`).child(targetActionMessageId).remove();
-            }
-            closeReactionDock();
-        }
-
+        function submitMessageReaction(emoji) { if(targetActionMessageId && activeClassName) { database.ref(`chats/${activeClassName}/${targetActionMessageId}/reaction`).set(emoji); } closeReactionDock(); }
+        function triggerMessageDeletion() { if(confirm("🗑️ क्या आप सच में यह मैसेज डिलीट करना चाहते हैं?")) { database.ref(`chats/${activeClassName}`).child(targetActionMessageId).remove(); } closeReactionDock(); }
+        
         function selectWallpaperEffect(effectName) {
-            currentSelectedWallpaper = effectName;
-            localStorage.setItem("sss_wp_effect", effectName);
+            currentSelectedWallpaper = effectName; localStorage.setItem("sss_wp_effect", effectName);
             document.querySelectorAll('#wallpaper-panel .style-chip').forEach(c => c.classList.remove('active'));
-            const chip = document.getElementById(`wp-chip-${effectName}`);
-            if(chip) chip.classList.add('active');
+            const chip = document.getElementById(`wp-chip-${effectName}`); if(chip) chip.classList.add('active');
             const msgBox = document.getElementById('chat-messages-box');
-            if(msgBox) msgBox.className = `chat-messages wp-${effectName}`;
+            if(msgBox) { msgBox.className = msgBox.className.replace(/wp-\S+/g, '') + ` wp-${effectName}`; }
         }
 
         function toggleChatMenu(e) { e.stopPropagation(); const m = document.getElementById('chat-dropdown-menu-el'); m.style.display = (m.style.display==='block')?'none':'block'; }
+        function toggleSubPanel(panelId) { const panels = ['theme-panel', 'wallpaper-panel', 'bubble-panel']; panels.forEach(p => { const el = document.getElementById(p); el.style.display = (p === panelId && el.style.display !== 'block') ? 'block' : 'none'; }); }
         
-        function toggleSubPanel(panelId) {
-            const panels = ['theme-panel', 'wallpaper-panel', 'bubble-panel'];
-            panels.forEach(p => {
-                const el = document.getElementById(p);
-                el.style.display = (p === panelId && el.style.display !== 'block') ? 'block' : 'none';
-            });
-        }
-
         function setupThemeSelectionGrid() {
             const grid = document.getElementById('theme-dots-grid'); grid.innerHTML = "";
             chatThemes.forEach(t => {
-                const dot = document.createElement('div'); dot.className = "color-dot"; dot.style.background = t.value;
-                dot.onclick = () => { currentSelectedTheme = t.value; localStorage.setItem("sss_theme_bg", t.value); document.getElementById('chat-messages-box').style.background = t.value; };
+                const dot = document.createElement('div'); dot.className = "style-chip"; dot.innerText = t.name;
+                dot.onclick = () => { currentSelectedTheme = t.value; localStorage.setItem("sss_theme_bg", t.value); applyThemeClass(t.value); };
                 grid.appendChild(dot);
             });
         }
+        function applyThemeClass(themeClass) { const msgBox = document.getElementById('chat-messages-box'); if(msgBox) { msgBox.className = `chat-messages wp-${currentSelectedWallpaper} ${themeClass}`; } }
 
         function selectBubbleStyle(styleName) {
             currentSelectedBubble = styleName; localStorage.setItem("sss_bubble_style", styleName);
             document.querySelectorAll('#bubble-panel .style-chip').forEach(c => c.classList.remove('active'));
             const activeChip = document.getElementById(`chip-${styleName}`); if(activeChip) activeChip.classList.add('active');
-            if(activeClassName) {
-                document.querySelectorAll('.chat-messages .msg').forEach(m => {
-                    m.className = `msg ${m.classList.contains('outgoing')?'outgoing':'incoming'} b-${styleName}`;
-                });
-            }
+            if(activeClassName) { document.querySelectorAll('.chat-messages .msg').forEach(m => { m.className = m.className.replace(/b-\S+/g, '') + ` b-${styleName}`; }); }
         }
 
         function clearAllChatMessages() {
-            let pwd = prompt("चैट क्लियर करने के लिए मास्टर密码 (Password) डालें:");
-            if (pwd === currentPassword) {
-                if(confirm("🚨 क्या आप सच में इस रूम के सारे मैसेजेस डिलीट करना चाहते हैं?")) {
-                    database.ref('chats/' + activeClassName).remove();
-                }
-            } else if (pwd !== null) { alert("❌ गलत पासवर्ड!"); }
+            let pwd = prompt("चैट क्लियर करने के लिए मास्टर पासवर्ड डालें:");
+            if (pwd === currentPassword) { if(confirm("🚨 क्या आप सच में सारे मैसेजेस डिलीट करना चाहते हैं?")) { database.ref('chats/' + activeClassName).remove(); } } 
+            else if (pwd !== null) { alert("❌ गलत पासवर्ड!"); }
         }
-
         function closeChatRoom() { if(currentChatListener) currentChatListener.off(); activeClassName = ""; document.getElementById('chat-room-page').style.display = 'none'; }
         function checkEnterKey(e) { if(e.key === 'Enter') sendMessage(); }
         function applyChatLockUI(l) { document.getElementById('chat-input-wrapper-el').style.display = l?'none':'flex'; document.getElementById('chat-send-btn-el').style.display = l?'none':'flex'; document.getElementById('chat-locked-notice-el').style.display = l?'block':'none'; }
+
+        // ==================== 🏆 TOPPERS FUNCTIONALITY SYSTEM ====================
+        function addNewTopperFromAdmin() {
+            const name = document.getElementById('admin-topper-name').value.trim();
+            const cls = document.getElementById('admin-topper-class').value.trim();
+            const marks = document.getElementById('admin-topper-marks').value.trim();
+            if(name && cls && marks) {
+                database.ref('toppers').push({ name, class: cls, marks });
+                document.getElementById('admin-topper-name').value = "";
+                document.getElementById('admin-topper-class').value = "";
+                document.getElementById('admin-topper-marks').value = "";
+            } else { alert("कृपया टॉपर छात्र की सभी जानकारियां भरें!"); }
+        }
+        function buildAdminToppersList(list) {
+            const c = document.getElementById('admin-toppers-dashboard-list'); c.innerHTML = "";
+            list.forEach(t => { c.innerHTML += `<div class="manager-row"><span>🏆 ${t.name} (${t.class} - ${t.marks})</span><button class="lock-toggle-btn locked" onclick="database.ref('toppers').child('${t.id}').remove()">🗑️</button></div>`; });
+        }
+        function renderFrontToppers(list) {
+            const c = document.getElementById('front-toppers-list-container');
+            c.innerHTML = list.length === 0 ? `<div class="no-notice-msg">अभी टॉपर्स की सूची घोषित नहीं हुई है।</div>` : "";
+            list.forEach(t => {
+                c.innerHTML += `
+                    <div class="topper-item-card">
+                        <div>
+                            <div style="font-size:16px; font-weight:bold; color:#fff;">👤 ${t.name}</div>
+                            <div style="font-size:12px; color:#a855f7; font-weight:bold; margin-top:4px;">📍 ${t.class}</div>
+                        </div>
+                        <div class="topper-rank">${t.marks}</div>
+                    </div>`;
+            });
+        }
 
         // ==================== 📅 TIMETABLE & NOTICES WALLS ====================
         function broadcastTimetableFromAdmin() {
@@ -870,20 +932,9 @@
             list.forEach(item => { c.innerHTML += `<div class="complaint-row"><div class="complaint-meta-info"><span>👤 ${item.name} (${item.class})</span></div><div>${item.text}</div><button class="lock-toggle-btn locked" style="margin-top:5px; width:100%;" onclick="database.ref('complaints').child('${item.id}').remove()">Resolve</button></div>`; });
         }
         
-        // 📞 फ्रंट-एंड पर टीचर कांटेक्ट नंबर रेंडर करने का फिक्स किया हुआ फंक्शन
         function renderTeacherContactsFront(list) {
-            const c = document.getElementById('front-teacher-contacts-container'); 
-            c.innerHTML = list.length === 0 ? `<div class="no-notice-msg">अभी कोई कांटेक्ट नंबर उपलब्ध नहीं है। कंट्रोल रूम से जोड़ें।</div>` : "";
-            list.forEach(t => { 
-                c.innerHTML += `
-                    <div class="teacher-card">
-                        <div class="teacher-meta">
-                            <span class="teacher-title-name">👤 ${t.name}</span>
-                            <span class="teacher-phone-sub">मोबाइल: ${t.phone}</span>
-                        </div>
-                        <a href="tel:${t.phone}" class="act-btn call">CALL</a>
-                    </div>`; 
-            });
+            const c = document.getElementById('front-teacher-contacts-container'); c.innerHTML = list.length === 0 ? `<div class="no-notice-msg">अभी कोई कांटेक्ट नंबर उपलब्ध नहीं है।</div>` : "";
+            list.forEach(t => { c.innerHTML += `<div class="teacher-card"><div class="teacher-meta"><span class="teacher-title-name">👤 ${t.name}</span><span class="teacher-phone-sub">मोबाइल: ${t.phone}</span></div><a href="tel:${t.phone}" class="act-btn call">CALL</a></div>`; });
         }
         function buildAdminTeachersList(list) {
             const c = document.getElementById('admin-teachers-dashboard-list'); c.innerHTML = "";
@@ -891,13 +942,7 @@
         }
         function addNewTeacherFromAdmin() {
             const n = document.getElementById('admin-teacher-name-input').value.trim(); const p = document.getElementById('admin-teacher-phone-input').value.trim();
-            if(n && p) { 
-                database.ref('teachers').push({ name: n, phone: p }); 
-                document.getElementById('admin-teacher-name-input').value=""; 
-                document.getElementById('admin-teacher-phone-input').value=""; 
-            } else {
-                alert("कृपया नाम और नंबर दोनों भरें!");
-            }
+            if(n && p) { database.ref('teachers').push({ name: n, phone: p }); document.getElementById('admin-teacher-name-input').value=""; document.getElementById('admin-teacher-phone-input').value=""; }
         }
 
         // ==================== CONTROL PANEL ACCESS ====================
@@ -912,36 +957,40 @@
         }
         function buildAdminDashboard() {
             const c = document.getElementById('admin-chat-rooms-dashboard'); c.innerHTML = "";
-            schoolClasses.forEach(cls => {
-                c.innerHTML += `<div class="manager-row"><span>${cls.name}</span><button class="lock-toggle-btn ${cls.locked?'locked':'unlocked'}" onclick="database.ref('roomStatus').child('${cls.name}').set(!${cls.locked})">${cls.locked?'🔒 Locked':'🔓 Active'}</button></div>`;
-            });
-        }
-        function adminSendDirectMessage() {
-            const cl = document.getElementById('admin-target-class-select').value; const t = document.getElementById('admin-direct-msg-text').value.trim(); if(!t) return;
-            database.ref('chats/' + cl).push({ text: `⭐ [ADMIN]: ${t}`, time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}), senderName: "PRINCIPAL SIR", senderId: "admin_room", fx: "glow" });
-            document.getElementById('admin-direct-msg-text').value = ""; alert("संदेश भेज दिया गया!");
+            schoolClasses.forEach(cls => { c.innerHTML += `<div class="manager-row"><span>${cls.name}</span><button class="lock-toggle-btn ${cls.locked?'locked':'unlocked'}" onclick="database.ref('roomStatus').child('${cls.name}').set(!${cls.locked})">${cls.locked?'🔒 Locked':'🔓 Active'}</button></div>`; });
         }
 
-        // ==================== 💎 INTERACTIVE 3D EFFECTS ====================
-        function apply3DEffect(e, el) {
-            const r = el.getBoundingClientRect(); const x = -((e.clientY - r.top - r.height/2) / r.height) * 20; const y = ((e.clientX - r.left - r.width/2) / r.width) * 20;
-            el.style.transform = `perspective(1000px) scale(0.98) rotateX(${x}deg) rotateY(${y}deg)`;
+        function adminSendDirectMessage() {
+            const cl = document.getElementById('admin-target-class-select').value; const t = document.getElementById('admin-direct-msg-text').value.trim(); const imgFile = document.getElementById('admin-broadcast-image-file').files[0];
+            if(!t && !imgFile) return;
+
+            const sendData = (base64Img = "") => {
+                database.ref('chats/' + cl).push({ text: t ? `⭐ [ADMIN]: ${t}` : `⭐ [ADMIN]: 📷 Photo Broadcast`, time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}), senderName: "PRINCIPAL SIR", senderId: "admin_room", fx: "glow", image: base64Img });
+                document.getElementById('admin-direct-msg-text').value = ""; document.getElementById('admin-broadcast-image-file').value = "";
+                alert("संदेश भेज दिया गया है!");
+            };
+            if(imgFile) { let r = new FileReader(); r.onload = () => sendData(r.result); r.readAsDataURL(imgFile); } else { sendData(""); }
         }
+
+        function apply3DEffect(e, el) { const r = el.getBoundingClientRect(); const x = -((e.clientY - r.top - r.height/2) / r.height) * 20; const y = ((e.clientX - r.left - r.width/2) / r.width) * 20; el.style.transform = `perspective(1000px) scale(0.98) rotateX(${x}deg) rotateY(${y}deg)`; }
         function reset3DEffect(el) { el.style.transform = 'perspective(1000px) scale(1) rotateX(0deg) rotateY(0deg)'; }
         function changeLogo(e) { if(!e.target.files[0]) return; let r = new FileReader(); r.onload = () => database.ref('adminSettings/logo').set(r.result); r.readAsDataURL(e.target.files[0]); }
 
-        // 📞 फिक्स किए हुए नेविगेशन फंक्शन्स (अब कांटेक्ट पेज स्मूथली लोड और क्लोज होगा)
         function openContactPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('contact-page').style.display = 'block'; }
         function closeContactPage() { document.getElementById('contact-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
-
         function openTimetablePage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('timetable-page').style.display = 'block'; }
         function closeTimetablePage() { document.getElementById('timetable-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
         function openNoticePage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('notice-page').style.display = 'block'; }
         function closeNoticePage() { document.getElementById('notice-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
         function openVideosPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('videos-page').style.display = 'block'; }
         function closeVideosPage() { document.getElementById('videos-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
+        
         function openComplaintsPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('complaints-page').style.display = 'block'; }
         function closeComplaintsPage() { document.getElementById('complaints-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
+
+        // toppers navigation
+        function openToppersPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('toppers-page').style.display = 'block'; }
+        function closeToppersPage() { document.getElementById('toppers-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
     </script>
 </body>
 </html>
