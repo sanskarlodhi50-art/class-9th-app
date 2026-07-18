@@ -6,7 +6,8 @@
     <title>Shiv Shiksha Sadan - 5-Star Luxury Portal</title>
     <!-- Firebase Compat Libraries (CDN) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -120,9 +121,9 @@
         }
 
         @keyframes iconPulse {
-            0% { transform: translateZ(25px) scale(1); filter: drop-shadow(0 0 12px #ff3366); }
-            50% { transform: translateZ(40px) scale(1.15); filter: drop-shadow(0 0 25px #ff3366) drop-shadow(0 0 35px #ffaa00); }
-            100% { transform: translateZ(25px) scale(1); filter: drop-shadow(0 0 12px #ff3366); }
+            0% { transform: scale(1); filter: drop-shadow(0 0 12px #ff3366); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 25px #ff3366) drop-shadow(0 0 35px #ffaa00); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 12px #ff3366); }
         }
 
         .card-wrapper {
@@ -139,7 +140,7 @@
         }
 
         .card-wrapper:hover {
-            transform: translateY(-5px) rotateX(10deg);
+            transform: translateY(-5px);
             box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7);
         }
 
@@ -165,7 +166,7 @@
             width: 100%; height: 100%; border-radius: 24px; padding: 28px 15px;
             display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
             font-size: 13px; font-weight: 800; color: #f1f5f9; z-index: 2; pointer-events: none;
-            transform: translateZ(20px); border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .w-classes .app-btn { 
@@ -223,7 +224,7 @@
             gap: 15px;
         }
         .topper-profile-box { display: flex; align-items: center; gap: 15px; }
-        .topper-avatar-img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid #00f2fe; background: #111a2e; }
+        .topper-avatar-img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid #00f2fe; background: #111a2e; cursor: pointer; }
         .topper-rank { font-size: 24px; font-weight: 900; color: #ffe600; text-shadow: 0 0 10px rgba(255,230,0,0.4); text-align: right; min-width: 70px; }
 
         /* ==================== 💎 5-STAR LUXURY CHAT SYSTEM ==================== */
@@ -250,9 +251,7 @@
         
         /* सब-पैनल्स */
         .sub-panel-container { display: none; padding: 12px; background: rgba(15, 23, 42, 0.9); border-bottom: 1px solid rgba(255,255,255,0.08); z-index: 9; }
-        .panel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 6px; }
-        .color-dot { width: 100%; padding-bottom: 100%; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.2); transform: scale(0.9); transition: 0.2s; }
-        .color-dot:hover { transform: scale(1.05); border-color: #38bdf8; }
+        .panel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 6px; }
         .style-chip { background: #334155; padding: 8px 12px; border-radius: 20px; text-align: center; font-size: 11px; cursor: pointer; font-weight: bold; color: #cbd5e1; }
         .style-chip.active { background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; box-shadow: 0 0 10px rgba(6, 182, 212, 0.4); }
 
@@ -274,7 +273,6 @@
         @keyframes spinAurora { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* Wallpaper Effects Patterns */
-        .wp-none {}
         .wp-starry { background-image: radial-gradient(white 1px, transparent 0), radial-gradient(rgba(255,255,255,0.4) 1.5px, transparent 0); background-size: 40px 40px, 90px 90px; background-position: 0 0, 30px 40px; animation: starFloat 20s linear infinite; }
         .wp-matrix { background: linear-gradient(rgba(0, 50, 0, 0.15) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 30, 0, 0.15), rgba(0, 0, 0, 0.1)); background-size: 4px 4px, 6px 6px; }
         .wp-grid { background-size: 32px 32px; background-image: linear-gradient(to right, rgba(56, 189, 248, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.03) 1px, transparent 1px); }
@@ -308,7 +306,6 @@
         .msg-img { max-width: 100%; border-radius: 12px; margin-top: 5px; display: block; border: 1px solid rgba(255,255,255,0.1); }
 
         /* 🔥 TEXT VIP EFFECTS INSIDE BUBBLE */
-        .txt-normal {}
         .txt-glow { text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px currentColor; font-weight: bold; }
         .txt-rainbow { background: linear-gradient(to right, #ef4444, #f59e0b, #10b981, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; display: inline-block; }
 
@@ -351,7 +348,7 @@
         .manager-row { display: flex; justify-content: space-between; align-items: center; background: #111a2e; padding: 12px 16px; border-radius: 12px; gap: 10px; }
         .manager-class-name { font-size: 14px; font-weight: bold; color: #f1f5f9; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
         
-        .complaint-row { background: #1c1424; border: 1px solid rgba(255, 85, 0, 0.2); display: flex; flex-direction: column; gap: 6px; align-items: flex-start; padding: 14px; border-radius: 12px; }
+        .complaint-row { background: #1c1424; border: 1px solid rgba(255, 85, 0, 0.2); display: flex; flex-direction: column; gap: 6px; align-items: flex-start; padding: 14px; border-radius: 12px; width: 100%; }
         .complaint-meta-info { display: flex; justify-content: space-between; width: 100%; font-size: 13px; color: #ff5500; font-weight: bold; }
         .complaint-text-content { font-size: 14px; color: #e2e8f0; margin-top: 4px; }
 
@@ -390,8 +387,8 @@
             </div>
 
             <div class="grid-container">
-                <!-- 🔥 3D एनिमेटेड क्लास 9 बटन -->
-                <div class="card-wrapper w-classes" onmousemove="apply3DEffect(event, this)" onmouseleave="reset3DEffect(this)" onclick="setTimeout(function(){ openChatRoom('Class 9'); }, 200)">
+                <!-- 🔥 क्लास 9 बटन -->
+                <div class="card-wrapper w-classes" onclick="setTimeout(function(){ openChatRoom('Class 9'); }, 200)">
                     <div class="app-btn">
                         <span class="icon">🚀</span>
                         <span>✨ CLASS IX • NEXUS ✨</span>
@@ -418,7 +415,7 @@
                     <div class="app-btn"><span class="icon">📢</span><span>COMPLAINTS BOX</span></div>
                 </div>
 
-                <!-- 👑 नया CLASS TOPPERS 3D ग्रिड बटन बिल्कुल कम्प्लेन बॉक्स जैसा -->
+                <!-- 👑 CLASS TOPPERS -->
                 <div class="card-wrapper w-toppers" onclick="setTimeout(openToppersPage, 200)">
                     <div class="app-btn"><span class="icon">🏆</span><span>CLASS TOPPERS</span></div>
                 </div>
@@ -473,7 +470,7 @@
             <div class="page-header"><button class="back-btn" onclick="saveAndClosePanel()">← BACK</button><div style="font-size: 22px; font-weight: 900; color: #38bdf8;">CONTROL ROOM</div></div>
             <div class="control-panel-container">
                 
-                <!-- 🏆 एडमिन पैनल में टॉपर्स मैनेज करने का विकल्प (फोटो अपलोड के साथ) -->
+                <!-- 🏆 एडमिन पैनल में टॉपर्स मैनेज करने का विकल्प -->
                 <div class="panel-section-title" style="color: #00f2fe; border-left-color: #00f2fe;">🏆 Manage Class Toppers</div>
                 <div class="panel-option">
                     <input type="text" id="admin-topper-name" placeholder="टॉपर छात्र का नाम">
@@ -515,14 +512,14 @@
                 <div class="panel-section-title">🔒 Chat Rooms Manager (On/Off)</div>
                 <div class="admin-chat-manager-list" id="admin-chat-rooms-dashboard"></div>
 
-                <div class="panel-section-title">🕊️ Admin Direct Broadcast (Text & Image)</div>
+                <div class="panel-section-title" style="color: #38bdf8; border-left-color: #38bdf8;">🕊️ Admin Direct Broadcast (Text & Image)</div>
                 <div class="panel-option"><select id="admin-target-class-select"></select></div>
                 <div class="panel-option">
                     <div class="admin-direct-msg-box" style="flex-direction: column; gap: 10px;">
-                        <input type="text" id="admin-direct-msg-text" placeholder="आधिकारिक संदेश ..." style="width:100%;">
-                        <div style="display: flex; gap: 10px; width:100%; align-items: center;">
+                        <input type="text" id="admin-direct-msg-text" placeholder="आ आधिकारिक संदेश ...">
+                        <div style="display: flex; gap: 10px; width:100%; align-items: center; flex-wrap: wrap;">
                             <label style="font-size: 12px; color: #94a3b8; font-weight: bold;">फोटो अपलोड (वैकल्पिक):</label>
-                            <input type="file" id="admin-broadcast-image-file" accept="image/*" style="padding:5px; font-size:12px;">
+                            <input type="file" id="admin-broadcast-image-file" accept="image/*" style="padding:5px; font-size:12px;" onchange="handleAdminBroadcastImageSelect(event)">
                             <button class="admin-send-btn" onclick="adminSendDirectMessage()">भेजें 📢</button>
                         </div>
                     </div>
@@ -635,6 +632,7 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+        const storage = firebase.storage();
 
         let currentPassword = "1234";
         let activeClassName = "";
@@ -642,7 +640,8 @@
         let targetActionMessageId = null; 
         let isFirstLoad = true;
         let selectedBase64Image = ""; 
-        let selectedTopperBase64Image = ""; // टॉपर के लिए फोटो स्टोरेज वेरिएबल
+        let selectedTopperBase64Image = ""; 
+        let selectedAdminBroadcastBase64Image = ""; 
 
         let currentSelectedBubble = localStorage.getItem("sss_bubble_style") || "standard";
         let currentSelectedTheme = localStorage.getItem("sss_theme_bg") || "th-cyber";
@@ -706,7 +705,6 @@
                 renderTeacherContactsFront(list); buildAdminTeachersList(list); 
             });
 
-            // 🏆 टॉपर्स डेटाबेस लिसनर
             database.ref('toppers').on('value', snap => {
                 let list = []; snap.forEach(c => { list.push({ id: c.key, ...c.val() }); });
                 renderFrontToppers(list);
@@ -842,7 +840,7 @@
         function checkEnterKey(e) { if(e.key === 'Enter') sendMessage(); }
         function applyChatLockUI(l) { document.getElementById('chat-input-wrapper-el').style.display = l?'none':'flex'; document.getElementById('chat-send-btn-el').style.display = l?'none':'flex'; document.getElementById('chat-locked-notice-el').style.display = l?'block':'none'; }
 
-        // ==================== 🏆 TOPPERS FUNCTIONALITY SYSTEM (फोटो अपलोडेड संस्करण) ====================
+        // ==================== 🏆 TOPPERS FUNCTIONALITY SYSTEM ====================
         function handleTopperPhotoSelect(e) {
             if(!e.target.files[0]) return;
             let file = e.target.files[0];
@@ -862,13 +860,13 @@
                     name: name, 
                     class: cls, 
                     marks: marks,
-                    photo: selectedTopperBase64Image || "" // अगर फोटो नहीं है तो खाली स्टोर होगा
+                    photo: selectedTopperBase64Image || "" 
                 });
                 document.getElementById('admin-topper-name').value = "";
                 document.getElementById('admin-topper-class').value = "";
                 document.getElementById('admin-topper-marks').value = "";
                 document.getElementById('admin-topper-photo').value = "";
-                selectedTopperBase64Image = ""; // रिसेट
+                selectedTopperBase64Image = ""; 
                 alert("🏆 टॉपर सफलतापूर्वक जोड़ा गया!");
             } else { alert("कृपया टॉपर छात्र की सभी जानकारियां (नाम, कक्षा, मार्क्स) भरें!"); }
         }
@@ -885,7 +883,6 @@
             const c = document.getElementById('front-toppers-list-container');
             c.innerHTML = list.length === 0 ? `<div class="no-notice-msg">अभी टॉपर्स की सूची घोषित नहीं हुई है।</div>` : "";
             list.forEach(t => {
-                // डिफ़ॉल्ट रूप से कोई फोटो न होने पर एक एनिमेटेड यूजर प्लेसहोल्डर आइकॉन दिखेगा
                 let imgSrc = t.photo ? t.photo : "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2364748b'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z'/></svg>";
                 
                 c.innerHTML += `
@@ -966,7 +963,7 @@
         }
         function renderAdminComplaintsLog(list) {
             const c = document.getElementById('admin-complaints-dashboard-log'); c.innerHTML = "";
-            list.forEach(item => { c.innerHTML += `<div class="complaint-row"><div class="complaint-meta-info"><span>👤 ${item.name} (${item.class})</span></div><div>${item.text}</div><button class="lock-toggle-btn locked" style="margin-top:5px; width:100%;" onclick="database.ref('complaints').child('${item.id}').remove()">Resolve</button></div>`; });
+            list.forEach(item => { c.innerHTML += `<div class="complaint-row"><div class="complaint-meta-info"><span>👤 ${item.name} (${item.class})</span></div><div class="complaint-text-content">${item.text}</div><button class="lock-toggle-btn locked" style="margin-top:5px; width:100%;" onclick="database.ref('complaints').child('${item.id}').remove()">Resolve</button></div>`; });
         }
         
         function renderTeacherContactsFront(list) {
@@ -984,48 +981,91 @@
 
         // ==================== CONTROL PANEL ACCESS ====================
         function verifyAndOpenControlPanel() {
-            let p = prompt("पासवर्ड दर्ज करें:");
-            if(p === currentPassword) { document.getElementById('home-page').style.display='none'; document.getElementById('control-panel-page').style.display='block'; }
-            else if(p !== null) { alert("गलत पासवर्ड!"); }
+            let p = prompt("कंट्रोल रूम में प्रवेश करने के लिए मास्टर पासवर्ड दर्ज करें:");
+            if (p === currentPassword) {
+                document.getElementById('home-page').style.display = 'none';
+                document.getElementById('control-panel-page').style.display = 'block';
+                buildAdminDashboard();
+            } else if (p !== null) { alert("❌ गलत पासवर्ड!"); }
         }
-        function saveAndClosePanel() {
-            let np = document.getElementById('new-password-input').value.trim(); if(np) database.ref('adminSettings/password').set(np);
-            document.getElementById('control-panel-page').style.display='none'; document.getElementById('home-page').style.display='block';
-        }
+
         function buildAdminDashboard() {
-            const c = document.getElementById('admin-chat-rooms-dashboard'); c.innerHTML = "";
-            schoolClasses.forEach(cls => { c.innerHTML += `<div class="manager-row"><span>${cls.name}</span><button class="lock-toggle-btn ${cls.locked?'locked':'unlocked'}" onclick="database.ref('roomStatus').child('${cls.name}').set(!${cls.locked})">${cls.locked?'🔒 Locked':'🔓 Active'}</button></div>`; });
+            const container = document.getElementById('admin-chat-rooms-dashboard');
+            if(!container) return;
+            container.innerHTML = "";
+            schoolClasses.forEach(c => {
+                let btnText = c.locked ? "चैट चालू करें (Unlock)" : "चैट बंद करें (Lock)";
+                let btnClass = c.locked ? "unlocked" : "locked";
+                container.innerHTML += `
+                    <div class="manager-row">
+                        <span class="manager-class-name">🚀 ${c.name} status</span>
+                        <button class="lock-toggle-btn ${btnClass}" onclick="toggleChatRoomLock('${c.name}', ${!c.locked})">${btnText}</button>
+                    </div>`;
+            });
+        }
+
+        function toggleChatRoomLock(className, shouldLock) {
+            database.ref('roomStatus/' + className).set(shouldLock).then(() => {
+                alert(`स्थिति बदल दी गई है: ${shouldLock ? 'चैट लॉक है' : 'चैट अनलॉक है'}`);
+            });
+        }
+
+        function handleAdminBroadcastImageSelect(event) {
+            if(!event.target.files[0]) return;
+            let file = event.target.files[0];
+            if(file.size > 1024 * 1024) { alert("❌ फोटो बहुत बड़ी है! 1MB से कम की फ़ाइल चुनें।"); return; }
+            let reader = new FileReader();
+            reader.onload = function() { selectedAdminBroadcastBase64Image = reader.result; };
+            reader.readAsDataURL(file);
         }
 
         function adminSendDirectMessage() {
-            const cl = document.getElementById('admin-target-class-select').value; const t = document.getElementById('admin-direct-msg-text').value.trim(); const imgFile = document.getElementById('admin-broadcast-image-file').files[0];
-            if(!t && !imgFile) return;
+            const targetClass = document.getElementById('admin-target-class-select').value;
+            const messageText = document.getElementById('admin-direct-msg-text').value.trim();
+            if (!messageText && !selectedAdminBroadcastBase64Image) return;
 
-            const sendData = (base64Img = "") => {
-                database.ref('chats/' + cl).push({ text: t ? `⭐ [ADMIN]: ${t}` : `⭐ [ADMIN]: 📷 Photo Broadcast`, time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}), senderName: "PRINCIPAL SIR", senderId: "admin_room", fx: "glow", image: base64Img });
-                document.getElementById('admin-direct-msg-text').value = ""; document.getElementById('admin-broadcast-image-file').value = "";
-                alert("संदेश भेज दिया गया है!");
-            };
-            if(imgFile) { let r = new FileReader(); r.onload = () => sendData(r.result); r.readAsDataURL(imgFile); } else { sendData(""); }
+            let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            database.ref('chats/' + targetClass).push({
+                text: "⭐ [ADMIN]: " + (messageText || "📷 Broadcast Photo"),
+                time: time,
+                senderName: "ADMINISTRATOR",
+                senderId: "admin",
+                fx: "glow",
+                image: selectedAdminBroadcastBase64Image
+            }).then(() => {
+                alert("📢 संदेश ब्रॉडकास्ट कर दिया गया है!");
+                document.getElementById('admin-direct-msg-text').value = "";
+                document.getElementById('admin-broadcast-image-file').value = "";
+                selectedAdminBroadcastBase64Image = "";
+            });
         }
 
-        function apply3DEffect(e, el) { const r = el.getBoundingClientRect(); const x = -((e.clientY - r.top - r.height/2) / r.height) * 20; const y = ((e.clientX - r.left - r.width/2) / r.width) * 20; el.style.transform = `perspective(1000px) scale(0.98) rotateX(${x}deg) rotateY(${y}deg)`; }
-        function reset3DEffect(el) { el.style.transform = 'perspective(1000px) scale(1) rotateX(0deg) rotateY(0deg)'; }
-        function changeLogo(e) { if(!e.target.files[0]) return; let r = new FileReader(); r.onload = () => database.ref('adminSettings/logo').set(r.result); r.readAsDataURL(e.target.files[0]); }
+        function changeLogo(e) {
+            if(!e.target.files[0]) return;
+            let file = e.target.files[0];
+            let reader = new FileReader();
+            reader.onload = function() { database.ref('adminSettings/logo').set(reader.result); };
+            reader.readAsDataURL(file);
+        }
 
-        function openContactPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('contact-page').style.display = 'block'; }
-        function closeContactPage() { document.getElementById('contact-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
+        function saveAndClosePanel() {
+            let newPwd = document.getElementById('new-password-input').value.trim();
+            if(newPwd) { database.ref('adminSettings/password').set(newPwd); }
+            document.getElementById('control-panel-page').style.display = 'none';
+            document.getElementById('home-page').style.display = 'block';
+        }
+
+        // ==================== PAGE CONTROLLERS ====================
         function openTimetablePage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('timetable-page').style.display = 'block'; }
         function closeTimetablePage() { document.getElementById('timetable-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
         function openNoticePage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('notice-page').style.display = 'block'; }
         function closeNoticePage() { document.getElementById('notice-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
-        
+        function openContactPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('contact-page').style.display = 'block'; }
+        function closeContactPage() { document.getElementById('contact-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
         function openVideosPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('videos-page').style.display = 'block'; }
         function closeVideosPage() { document.getElementById('videos-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
-        
         function openComplaintsPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('complaints-page').style.display = 'block'; }
         function closeComplaintsPage() { document.getElementById('complaints-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
-
         function openToppersPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('toppers-page').style.display = 'block'; }
         function closeToppersPage() { document.getElementById('toppers-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
     </script>
