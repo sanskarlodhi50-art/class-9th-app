@@ -220,8 +220,11 @@
             border-left: 5px solid #00f2fe; border-radius: 16px; padding: 16px;
             display: flex; justify-content: space-between; align-items: center;
             box-shadow: 0 8px 20px rgba(0,0,0,0.4); border-top: 1px solid rgba(255,255,255,0.05);
+            gap: 15px;
         }
-        .topper-rank { font-size: 24px; font-weight: 900; color: #ffe600; text-shadow: 0 0 10px rgba(255,230,0,0.4); }
+        .topper-profile-box { display: flex; align-items: center; gap: 15px; }
+        .topper-avatar-img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid #00f2fe; background: #111a2e; }
+        .topper-rank { font-size: 24px; font-weight: 900; color: #ffe600; text-shadow: 0 0 10px rgba(255,230,0,0.4); text-align: right; min-width: 70px; }
 
         /* ==================== 💎 5-STAR LUXURY CHAT SYSTEM ==================== */
         #chat-room-page {
@@ -311,7 +314,7 @@
 
         /* 🌟 DYNAMIC MESSAGE REACTION DOCK SYSTEM */
         .reaction-dock-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 500; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .reaction-card-panel { background: #1e293b; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); text-align: center; animation: popDock 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .reaction-card-panel { background: #1e293b; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); text-align: center; animation: popDock 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes popDock { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .emojis-row { display: flex; gap: 14px; justify-content: center; margin-bottom: 12px; }
         .react-emoji-btn { font-size: 26px; cursor: pointer; transition: transform 0.2s; -webkit-user-select: none; user-select: none; }
@@ -457,10 +460,9 @@
             </div>
         </div>
 
-        <!-- ==================== 🏆 क्लास टॉपर्स इंटरफ़ेस स्क्रीन (कम्प्लेन बॉक्स जैसा लुक) ==================== -->
+        <!-- ==================== 🏆 क्लास टॉपर्स इंटरफ़ेस स्क्रीन ==================== -->
         <div id="toppers-page">
             <div class="page-header"><button class="back-btn" onclick="closeToppersPage()">← BACK</button><div style="font-size: 22px; font-weight: 900; color: #00f2fe;">SHIV SHIKSHA SADAN TOPPERS</div></div>
-            <!-- कम्प्लेन बोर्ड जैसा कंटेनर बॉक्स -->
             <div class="notice-board-container">
                 <div class="notice-list-wall" id="front-toppers-list-container"></div>
             </div>
@@ -470,11 +472,16 @@
         <div id="control-panel-page">
             <div class="page-header"><button class="back-btn" onclick="saveAndClosePanel()">← BACK</button><div style="font-size: 22px; font-weight: 900; color: #38bdf8;">CONTROL ROOM</div></div>
             <div class="control-panel-container">
-                <!-- 🏆 एडमिन पैनल में टॉपर्स मैनेज करने का विकल्प -->
+                
+                <!-- 🏆 एडमिन पैनल में टॉपर्स मैनेज करने का विकल्प (फोटो अपलोड के साथ) -->
                 <div class="panel-section-title" style="color: #00f2fe; border-left-color: #00f2fe;">🏆 Manage Class Toppers</div>
                 <div class="panel-option">
                     <input type="text" id="admin-topper-name" placeholder="टॉपर छात्र का नाम">
                     <input type="text" id="admin-topper-class" placeholder="कक्षा (जैसे: Class 9th)">
+                    <div class="panel-option">
+                        <label style="font-size:12px; color:#cbd5e1;">छात्र की फोटो चुनें (वैकल्पिक):</label>
+                        <input type="file" id="admin-topper-photo" accept="image/*" onchange="handleTopperPhotoSelect(event)">
+                    </div>
                     <div class="admin-direct-msg-box">
                         <input type="text" id="admin-topper-marks" placeholder="प्रतिशत या रैंक (जैसे: 98% या Rank 1)">
                         <button class="admin-send-btn" style="background: #00f2fe; color: #000;" onclick="addNewTopperFromAdmin()">जोड़ें 🏆</button>
@@ -635,6 +642,7 @@
         let targetActionMessageId = null; 
         let isFirstLoad = true;
         let selectedBase64Image = ""; 
+        let selectedTopperBase64Image = ""; // टॉपर के लिए फोटो स्टोरेज वेरिएबल
 
         let currentSelectedBubble = localStorage.getItem("sss_bubble_style") || "standard";
         let currentSelectedTheme = localStorage.getItem("sss_theme_bg") || "th-cyber";
@@ -834,31 +842,60 @@
         function checkEnterKey(e) { if(e.key === 'Enter') sendMessage(); }
         function applyChatLockUI(l) { document.getElementById('chat-input-wrapper-el').style.display = l?'none':'flex'; document.getElementById('chat-send-btn-el').style.display = l?'none':'flex'; document.getElementById('chat-locked-notice-el').style.display = l?'block':'none'; }
 
-        // ==================== 🏆 TOPPERS FUNCTIONALITY SYSTEM ====================
+        // ==================== 🏆 TOPPERS FUNCTIONALITY SYSTEM (फोटो अपलोडेड संस्करण) ====================
+        function handleTopperPhotoSelect(e) {
+            if(!e.target.files[0]) return;
+            let file = e.target.files[0];
+            if(file.size > 1024 * 1024) { alert("❌ फोटो बहुत बड़ी है! कृपया 1MB से छोटी फोटो चुनें।"); return; }
+            let reader = new FileReader();
+            reader.onload = function() { selectedTopperBase64Image = reader.result; };
+            reader.readAsDataURL(file);
+        }
+
         function addNewTopperFromAdmin() {
             const name = document.getElementById('admin-topper-name').value.trim();
             const cls = document.getElementById('admin-topper-class').value.trim();
             const marks = document.getElementById('admin-topper-marks').value.trim();
+            
             if(name && cls && marks) {
-                database.ref('toppers').push({ name, class: cls, marks });
+                database.ref('toppers').push({ 
+                    name: name, 
+                    class: cls, 
+                    marks: marks,
+                    photo: selectedTopperBase64Image || "" // अगर फोटो नहीं है तो खाली स्टोर होगा
+                });
                 document.getElementById('admin-topper-name').value = "";
                 document.getElementById('admin-topper-class').value = "";
                 document.getElementById('admin-topper-marks').value = "";
-            } else { alert("कृपया टॉपर छात्र की सभी जानकारियां भरें!"); }
+                document.getElementById('admin-topper-photo').value = "";
+                selectedTopperBase64Image = ""; // रिसेट
+                alert("🏆 टॉपर सफलतापूर्वक जोड़ा गया!");
+            } else { alert("कृपया टॉपर छात्र की सभी जानकारियां (नाम, कक्षा, मार्क्स) भरें!"); }
         }
+
         function buildAdminToppersList(list) {
             const c = document.getElementById('admin-toppers-dashboard-list'); c.innerHTML = "";
-            list.forEach(t => { c.innerHTML += `<div class="manager-row"><span>🏆 ${t.name} (${t.class} - ${t.marks})</span><button class="lock-toggle-btn locked" onclick="database.ref('toppers').child('${t.id}').remove()">🗑️</button></div>`; });
+            list.forEach(t => { 
+                let hasPhotoIcon = t.photo ? "🖼️ " : "👤 ";
+                c.innerHTML += `<div class="manager-row"><span>${hasPhotoIcon}${t.name} (${t.class} - ${t.marks})</span><button class="lock-toggle-btn locked" onclick="database.ref('toppers').child('${t.id}').remove()">🗑️</button></div>`; 
+            });
         }
+
         function renderFrontToppers(list) {
             const c = document.getElementById('front-toppers-list-container');
             c.innerHTML = list.length === 0 ? `<div class="no-notice-msg">अभी टॉपर्स की सूची घोषित नहीं हुई है।</div>` : "";
             list.forEach(t => {
+                // डिफ़ॉल्ट रूप से कोई फोटो न होने पर एक एनिमेटेड यूजर प्लेसहोल्डर आइकॉन दिखेगा
+                let imgSrc = t.photo ? t.photo : "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2364748b'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z'/></svg>";
+                
                 c.innerHTML += `
                     <div class="topper-item-card">
-                        <div>
-                            <div style="font-size:16px; font-weight:bold; color:#fff;">👤 ${t.name}</div>
-                            <div style="font-size:12px; color:#a855f7; font-weight:bold; margin-top:4px;">📍 ${t.class}</div>
+                        <div class="topper-profile-box">
+                            <img src="${imgSrc}" class="topper-avatar-img" onclick="window.open(this.src)">
+                            <div>
+                                <div style="font-size:16px; font-weight:bold; color:#fff;">${t.name}</div>
+                                <div style="font-size:12px; color:#00f2fe; font-weight:bold; margin-top:4px;">📍 ${t.class}</div>
+                            </div>
                         </div>
                         <div class="topper-rank">${t.marks}</div>
                     </div>`;
@@ -982,13 +1019,13 @@
         function closeTimetablePage() { document.getElementById('timetable-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
         function openNoticePage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('notice-page').style.display = 'block'; }
         function closeNoticePage() { document.getElementById('notice-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
+        
         function openVideosPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('videos-page').style.display = 'block'; }
         function closeVideosPage() { document.getElementById('videos-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
         
         function openComplaintsPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('complaints-page').style.display = 'block'; }
         function closeComplaintsPage() { document.getElementById('complaints-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
 
-        // toppers navigation
         function openToppersPage() { document.getElementById('home-page').style.display = 'none'; document.getElementById('toppers-page').style.display = 'block'; }
         function closeToppersPage() { document.getElementById('toppers-page').style.display = 'none'; document.getElementById('home-page').style.display = 'block'; }
     </script>
