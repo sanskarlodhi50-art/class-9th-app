@@ -6,7 +6,7 @@
     <title>Shiv Shiksha Sadan - 5-Star Luxury Portal</title>
     <!-- Firebase Compat Libraries (CDN) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
     <style>
         * {
@@ -156,8 +156,9 @@
         .w-videos::before  { background: conic-gradient(#f39c12, #f1c40f, transparent, transparent); } 
         .w-complaints::before { background: conic-gradient(#ff0055, #ff5500, transparent, transparent); } 
         .w-toppers::before { background: conic-gradient(#00f2fe, #4facfe, transparent, transparent); } 
+        .w-chatbot::before { background: conic-gradient(#8b5cf6, #d946ef, #8b5cf6, transparent, transparent); } 
 
-        .w-classes, .w-complaints, .w-toppers { grid-column: span 2; }
+        .w-classes, .w-complaints, .w-toppers, .w-chatbot { grid-column: span 2; }
 
         .app-btn {
             background: rgba(9, 14, 26, 0.85);
@@ -178,8 +179,19 @@
             text-shadow: 0 0 15px rgba(255, 51, 102, 0.8), 0 0 5px rgba(255, 255, 255, 0.5);
         }
 
+        /* 🤖 एआई चैटबोट स्पेशल बटन स्टाइलिंग */
+        .w-chatbot .app-btn {
+            padding: 35px 15px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(10, 7, 20, 0.95));
+        }
+        .w-chatbot .app-btn span:last-child {
+            font-size: 18px; font-weight: 900; color: #ffffff;
+            text-shadow: 0 0 15px rgba(217, 70, 239, 0.8), 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
         .icon { font-size: 34px; display: inline-block; }
         .w-classes .icon { font-size: 42px; animation: iconPulse 2s infinite ease-in-out; }
+        .w-chatbot .icon { font-size: 38px; animation: iconPulse 2.5s infinite ease-in-out; }
 
         /* कॉमन पेज लेआउट */
         #control-panel-page, #contact-page, #complaints-page, #videos-page, #notice-page, #timetable-page, #toppers-page { display: none; }
@@ -419,6 +431,14 @@
                 <div class="card-wrapper w-toppers" onclick="setTimeout(openToppersPage, 200)">
                     <div class="app-btn"><span class="icon">🏆</span><span>CLASS TOPPERS</span></div>
                 </div>
+
+                <!-- 🤖 GOOGLE GEMINI AI CHATBOT -->
+                <div class="card-wrapper w-chatbot" onclick="setTimeout(function(){ window.open('https://gemini.google.com', '_blank'); }, 200)">
+                    <div class="app-btn">
+                        <span class="icon">🤖</span>
+                        <span>✨ AI CHATBOT (GOOGLE GEMINI) ✨</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -465,7 +485,7 @@
             </div>
         </div>
 
-        <!-- ==================== ⚙️ CONTROL PANEL ==================== -->
+        <!-- ==================== 🛠️ MASTER CONTROL PANEL ==================== -->
         <div id="control-panel-page">
             <div class="page-header"><button class="back-btn" onclick="saveAndClosePanel()">← BACK</button><div style="font-size: 22px; font-weight: 900; color: #38bdf8;">CONTROL ROOM</div></div>
             <div class="control-panel-container">
@@ -575,10 +595,10 @@
                 </div>
             </div>
 
-            <!-- 💬 लाइव मैसेजेस बॉक्स -->
+            <!-- 💬 लाइव मैसेजेस BOX -->
             <div class="chat-messages wp-none" id="chat-messages-box"></div>
 
-            <!-- 📥 इनपादन एरिया -->
+            <!-- 📥 इनपुट एरिया -->
             <div class="chat-input-area">
                 <div class="fx-selector-row">
                     <span>VIP टेक्स्ट इफेक्ट्स:</span>
@@ -832,7 +852,7 @@
         }
 
         function clearAllChatMessages() {
-            let pwd = prompt("चैट क्लियर करने के लिए मास्टर पासवर्ड डालें:");
+            let pwd = prompt("चैट क्लियर करने के लिए मास्टर密码 डालेंगे:");
             if (pwd === currentPassword) { if(confirm("🚨 क्या आप सच में सारे मैसेजेस डिलीट करना चाहते हैं?")) { database.ref('chats/' + activeClassName).remove(); } } 
             else if (pwd !== null) { alert("❌ गलत पासवर्ड!"); }
         }
@@ -1040,13 +1060,13 @@
             });
         }
 
-        function changeLogo(e) {
+        document.getElementById('logo-uploader').onchange = function(e) {
             if(!e.target.files[0]) return;
             let file = e.target.files[0];
             let reader = new FileReader();
             reader.onload = function() { database.ref('adminSettings/logo').set(reader.result); };
             reader.readAsDataURL(file);
-        }
+        };
 
         function saveAndClosePanel() {
             let newPwd = document.getElementById('new-password-input').value.trim();
